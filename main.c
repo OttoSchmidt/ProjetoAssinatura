@@ -6,37 +6,19 @@
 
 const char tiposAssinatura[3][9] = {"Starter", "Standard", "Premium"};
 
-typedef struct {
-    char numeroCartao[13], nome[31], vencimento[6], uf[3], endereco[31], numeroResidencial[11];
-    int ccv, cep;
-} DadosPagamentos;
-
-/* TIPOS DE ASSINATURA:
- *  1 - BASIC
-    2 - STANDARD
-    3 - PREMIUM
-*/
-
-typedef struct {
-    int numeroCliente, tipoAssinatura;
-    char nome[31], cpf[12], telefone[12], email[21];
-    bool ativo, renovacaoAutomatica;
-    DadosPagamentos pagamento;
-} Cadastro;
-
 int menu () {
     int opcao;
 
     printf("[1] - Cadastrar novo cliente\n[2] - Alterar plano\n[3] - Desativar cliente\n[4] - Reativar cliente\n[5] - Excluir cliente\n[6] - Listar clientes\n[7] - Realizar pedido\n[8] - Sair\n");
     scanf("%d", &opcao);
 
-    system("clear");
+    system("cls");
 
     return opcao;
 }
 
-void cadastroClientePagamento (DadosPagamentos *pagamento) {
-    system("clear");
+int cadastroClientePagamento (DadosPagamentos *pagamento) {
+    system("cls");
 
     printf("Informe o nome no cartao: ");
     scanf(" %30[^\n]", pagamento->nome);
@@ -46,7 +28,16 @@ void cadastroClientePagamento (DadosPagamentos *pagamento) {
         printf("Informe o numero do cartao (somente numeros): ");
         scanf(" %12[^\n]", pagamento->numeroCartao);
 
-        //validarCartao(pagamento->numeroCartao);
+        if (validarCartao(pagamento->numeroCartao) != 0) {
+            int continuar;
+
+            printf("NUMERO DO CARTAO INVALIDO\nDESEJA TENTAR NOVAMENTE (0 - nao, 1 - sim): ");
+            scanf("%d", &continuar);
+
+            if (!continuar) return -1;
+
+            continue;
+        }
 
         break;
     }
@@ -69,6 +60,8 @@ void cadastroClientePagamento (DadosPagamentos *pagamento) {
 
     printf("Informe o numero da residencia: ");
     scanf(" %10[^\n]", pagamento->numeroResidencial);
+
+    return 0;
 }
 
 int cadastroNovoCliente (Cadastro *clientes, int i, int novoNumeroCliente) {
@@ -81,25 +74,29 @@ int cadastroNovoCliente (Cadastro *clientes, int i, int novoNumeroCliente) {
     printf("Informe o nome: ");
     scanf(" %30[^\n]", (clientes + i)->nome);
 
-    printf("Informe o CPF (somente numeros): ");
-    scanf(" %11[^\n]", (clientes + i)->cpf);
+    while (1) {
+        printf("Informe o CPF (somente numeros): ");
+        scanf(" %11[^\n]", (clientes + i)->cpf);
 
-    if (validarCPF(clientes[i].cpf) == -1) {
-        int continuar;
+        if (validarCPF(clientes[i].cpf) == -1) {
+            int continuar;
 
-        printf("CPF INVALIDO\nDESEJA TENTAR NOVAMENTE (1 - sim, 2 - nao): ");
-        scanf("%d", &continuar);
+            printf("CPF INVALIDO\nDESEJA TENTAR NOVAMENTE (0 - nao, 1 - sim): ");
+            scanf("%d", &continuar);
 
-        if (continuar == 2) return -1;
+            if (!continuar) return -1;
 
-        return cadastroNovoCliente(clientes, i, novoNumeroCliente);
+            continue;
+        }
+
+        break;
     }
 
     printf("Informe o telefone (somente numeros): ");
     scanf(" %11[^\n]", (clientes + i)->telefone);
 
     printf("Informe o email: ");
-    scanf("%20[^\n]", (clientes + i)->email);
+    scanf(" %30[^\n]", (clientes + i)->email);
 
     printf("OPCOES DE PLANOS:\n\t1 - Starter\n\t2 - Standard\n\t3 - Premium\nInforme o tipo de assinatura: ");
     scanf("%d", &(clientes + i)->tipoAssinatura);
@@ -113,9 +110,8 @@ int cadastroNovoCliente (Cadastro *clientes, int i, int novoNumeroCliente) {
         (clientes + i)->renovacaoAutomatica = false;
     }
 
-    cadastroClientePagamento(&(clientes + i)->pagamento);
+    if (cadastroClientePagamento(&(clientes + i)->pagamento) != 0) return -1;
 
-    //ordernarAlfabeticamente(clientes);
     printf("ID CLIENTE: %d\n", (clientes + i)->numeroCliente);
     return 0;
 }
@@ -150,13 +146,11 @@ Cadastro *excluirCliente(Cadastro *clientes, int numCliente, int *clienteSelecio
         strcpy(clientes[i].pagamento.numeroResidencial, clientes[i+1].pagamento.numeroResidencial);
     }
 
-    clientes = (Cadastro*) realloc(clientes, (tam - 1) * sizeof(Cadastro));
-    //ordernarAlfabeticamente(clientes);
-    return clientes;
+    return (Cadastro*) realloc(clientes, (tam - 1) * sizeof(Cadastro));
 }
 
 void imprimirClienteInd(Cadastro *clientes, int i) {
-    printf("\nNUM CLIENTE: %d\nATIVO: %d\nNOME: %s\nCPF: %s\nTIPO DE ASSINATURA: %s\nTELEFONE: %sEMAIL: %s\n", clientes[i].numeroCliente, clientes[i].ativo, clientes[i].nome, clientes[i].cpf, tiposAssinatura[clientes[i].tipoAssinatura - 1], clientes[i].telefone, clientes[i].email);
+    printf("\nNUM CLIENTE: %d\nATIVO: %d\nNOME: %s\nCPF: %s\nTIPO DE ASSINATURA: %s\nTELEFONE: %s\nEMAIL: %s\n", clientes[i].numeroCliente, clientes[i].ativo, clientes[i].nome, clientes[i].cpf, tiposAssinatura[clientes[i].tipoAssinatura - 1], clientes[i].telefone, clientes[i].email);
 }
 
 void imprimirClientes(Cadastro *clientes, int *ordemAlfabetica, int tipo, int tam, int *clienteSelecionado) {
@@ -209,16 +203,20 @@ int main () {
                 identificadorCliente++;
 
                 clientes = (Cadastro*) realloc(clientes, quantClientes * sizeof(Cadastro));
-                //ordemAlfabeticaIndices = (int*) realloc(ordemAlfabeticaIndices, quantClientes * sizeof(int));
+                ordemAlfabeticaIndices = (int*) realloc(ordemAlfabeticaIndices, quantClientes * sizeof(int));
 
-                if (cadastroNovoCliente(clientes, quantClientes - 1, identificadorCliente) == -1) {
-                    //cadastro invalido
+                if (quantClientes > 0) ordemAlfabeticaIndices[quantClientes-1] = quantClientes-1;
+
+                if (cadastroNovoCliente(clientes, quantClientes - 1, identificadorCliente) == -1) { //cadastro invalidado
                     identificadorCliente--;
                     quantClientes--;
 
                     clientes = (Cadastro*) realloc(clientes, quantClientes * sizeof(Cadastro));
                     ordemAlfabeticaIndices = (int*) realloc(ordemAlfabeticaIndices, quantClientes * sizeof(int));
+                } else {
+                    quickSort(clientes, ordemAlfabeticaIndices, 0, quantClientes-1);
                 }
+
                 break;
             case 2: //alterar plano
                 if (clienteCopiado != -1) {
@@ -297,6 +295,8 @@ int main () {
                 } else {
                     clientes = excluirCliente(clientes, num, &clienteCopiado, quantClientes);
                     quantClientes--;
+                    recriarIndices(ordemAlfabeticaIndices, quantClientes);
+                    quickSort(clientes, ordemAlfabeticaIndices, 0, quantClientes-1);
                 }
 
                 printf("QUANTIDADE CLIENTES: %d\n", quantClientes);
