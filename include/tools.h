@@ -1,6 +1,7 @@
+#include <stdio.h>
+#include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
-#include <regex.h>
 
 typedef struct {
     char numeroCartao[13], nome[31], vencimento[6], uf[3], endereco[31], numeroResidencial[11];
@@ -124,3 +125,10 @@ void quickSort(Cadastro *clientes, int *ordem, int min, int max)
 	}
 }
 
+void importarDados(FILE *arq, Cadastro *clientes, int *ordem, int *quant, int *identificador) {
+    while (!feof(arq)) {
+        //
+
+
+    }
+}
