@@ -22,7 +22,7 @@ int cadastroClientePagamento (DadosPagamentos *pagamento) {
 
     while (1) {
         printf("Informe o numero do cartao (somente numeros): ");
-        scanf(" %12[^\n]", pagamento->numeroCartao);
+        scanf(" %20[^\n]", pagamento->numeroCartao);
 
         if (validarCartao(pagamento->numeroCartao) != 0) {
             int continuar;

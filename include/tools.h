@@ -4,7 +4,7 @@
 #include <string.h>
 
 typedef struct {
-    char numeroCartao[17], nome[31], vencimento[6], uf[3], endereco[31], numeroResidencial[11];
+    char numeroCartao[21], nome[31], vencimento[6], uf[3], endereco[31], numeroResidencial[11];
     int ccv, cep;
 } DadosPagamentos;
 
@@ -79,7 +79,9 @@ int validarCPF (const char *cpf) {
 int validarCartao(const char *cartao) {
     int len = strlen(cartao);
     int soma = 0;
-    int ePar = 0;
+    bool ePar = false;
+
+    if (len != 16) return -1;
 
     for (int i = len - 1; i >= 0; i--) {
         int digito = cartao[i] - '0';
@@ -92,28 +94,15 @@ int validarCartao(const char *cartao) {
         }
 
         soma += digito;
-        ePar = !ePar;
+        ePar = !ePar; //alternar o digito (um sim, outro nao)
     }
 
     if (soma % 10 == 0) {
-        return 1;  // Numero de cartao de credito valido
+        return 0;  // Numero de cartao de credito valido
     } else {
-        return 0;  // Numero de cartao de credito invalido
+        return -1;  // Numero de cartao de credito invalido
     }
 }
-
-int main() {
-    const char *cartao = "4417123456789113";
-
-    if (validarCartao(cartao)) {
-        printf("Numero de cartao de credito valido\n");
-    } else {
-        printf("Numero de cartao de credito invalido\n");
-    }
-
-    return 0;
-}
-
 
 int dividir(Cadastro *clientes, int *ordem, int min, int max) {
 	int pivot = ordem[max], i = (min - 1);
