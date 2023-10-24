@@ -96,9 +96,9 @@ int validarCartao(const char *cartao) {
     }
 
     if (soma % 10 == 0) {
-        return 1;  // Número de cartão de crédito válido
+        return 1;  // Numero de cartao de credito valido
     } else {
-        return 0;  // Número de cartão de crédito inválido
+        return 0;  // Numero de cartao de credito invalido
     }
 }
 
@@ -106,13 +106,14 @@ int main() {
     const char *cartao = "4417123456789113";
 
     if (validarCartao(cartao)) {
-        printf("Número de cartão de crédito válido\n");
+        printf("Numero de cartao de credito valido\n");
     } else {
-        printf("Número de cartão de crédito inválido\n");
+        printf("Numero de cartao de credito invalido\n");
     }
 
     return 0;
 }
+
 
 int dividir(Cadastro *clientes, int *ordem, int min, int max) {
 	int pivot = ordem[max], i = (min - 1);
