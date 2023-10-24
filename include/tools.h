@@ -76,21 +76,40 @@ int validarCPF (const char *cpf) {
     return 0;
 }
 
-int validarCartao (const char *cartao) {
-    int digitoVerificador;
+int validarCartao(const char *cartao) {
+    int len = strlen(cartao);
+    int soma = 0;
+    int ePar = 0;
 
-    /*
-        num cartao (ex): 4417 1234 5678 9113
-        1. Comecando da esquerda, calcule o dobro de um digito e outro nao:
-            4(x2) 4 1(x2) 7 1(x2) 2 3(x2) 4 5(x2) 6 7(x2) 8 9(x2) 1 1(x2) 3
-            O resultado e: 8427 2264 106148 18123
-        2. Se algum resultado tiver mais de dois digitos, some-os:
-            10 = 1+0 // 14= 1+4 // 18= 1+8
-            Entao tamos 8427 2264 2658 9123
-        3. Adicione todos os digitos:
-            8+4+2+7 + 2+2+6+4 + 2+6+7+8 + 9+1+2+3 = 70
-        4. Se o resultado da soma for multiplo de 10, então o cartao e valido
-     */
+    for (int i = len - 1; i >= 0; i--) {
+        int digito = cartao[i] - '0';
+
+        if (ePar) {
+            digito *= 2;
+            if (digito > 9) {
+                digito = digito / 10 + digito % 10;
+            }
+        }
+
+        soma += digito;
+        ePar = !ePar;
+    }
+
+    if (soma % 10 == 0) {
+        return 1;  // Número de cartão de crédito válido
+    } else {
+        return 0;  // Número de cartão de crédito inválido
+    }
+}
+
+int main() {
+    const char *cartao = "4417123456789113";
+
+    if (validarCartao(cartao)) {
+        printf("Número de cartão de crédito válido\n");
+    } else {
+        printf("Número de cartão de crédito inválido\n");
+    }
 
     return 0;
 }
