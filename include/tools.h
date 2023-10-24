@@ -4,7 +4,7 @@
 #include <string.h>
 
 typedef struct {
-    char numeroCartao[13], nome[31], vencimento[6], uf[3], endereco[31], numeroResidencial[11];
+    char numeroCartao[17], nome[31], vencimento[6], uf[3], endereco[31], numeroResidencial[11];
     int ccv, cep;
 } DadosPagamentos;
 

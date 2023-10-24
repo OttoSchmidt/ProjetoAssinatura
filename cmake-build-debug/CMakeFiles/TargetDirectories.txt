@@ -1,3 +1,3 @@
-C:/Users/ottos/CLionProjects/ProjetoAssinatura/cmake-build-debug/CMakeFiles/ProjetoAssinatura.dir
-C:/Users/ottos/CLionProjects/ProjetoAssinatura/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/ottos/CLionProjects/ProjetoAssinatura/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+C:/Users/sampa/Desktop/ProjetoAssinatura/cmake-build-debug/CMakeFiles/ProjetoAssinatura.dir
+C:/Users/sampa/Desktop/ProjetoAssinatura/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/sampa/Desktop/ProjetoAssinatura/cmake-build-debug/CMakeFiles/rebuild_cache.dir
