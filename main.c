@@ -18,8 +18,19 @@ int main () {
         if (arq == NULL) {
             printf("Erro ao abrir o arquivo\n");
         } else {
+            clientes = importarDados(arq, clientes, &ordemAlfabeticaIndices, &quantClientes, &identificadorCliente);
             fclose(arq);
-            importarDados(arq, clientes, ordemAlfabeticaIndices, &quantClientes, &identificadorCliente);
+
+            if (clientes == NULL || ordemAlfabeticaIndices == NULL) {
+                printf("Erro ao importar o arquivo\n");
+                Sleep(2000);
+                return -2;
+            }
+
+            if (quantClientes == 0) {
+                printf("Nenhum cliente encontrado no arquivo\n");
+                Sleep(2000);
+            }
         }
     }
 
@@ -27,7 +38,7 @@ int main () {
         system("cls");
 
         opcaoSelecionada = menu();
-        if (opcaoSelecionada == 8) {
+        if (opcaoSelecionada == 7) {
             arq = fopen("clientes.csv", "w");
             if (arq == NULL) {
                 printf("Nao foi possivl abrir o arquivo\nDeseja sair (0 - nao // 1 - sim): ");
@@ -162,9 +173,6 @@ int main () {
                     clienteCopiado = buscarCliente(clientes, clienteCopiado, quantClientes);
                 }
 
-                break;
-            case 7: //realizar pedido
-                printf("REALIZAR PEDIDO\n");
                 break;
             default: printf("Opção invalida");
         }

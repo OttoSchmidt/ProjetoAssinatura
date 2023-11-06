@@ -5,7 +5,7 @@ const char tiposAssinatura[3][9] = {"Starter", "Standard", "Premium"};
 int menu () {
     int opcao;
 
-    printf("[1] - Cadastrar novo cliente\n[2] - Alterar plano\n[3] - Desativar cliente\n[4] - Reativar cliente\n[5] - Excluir cliente\n[6] - Listar clientes\n[7] - Realizar pedido\n[8] - Sair\n");
+    printf("[1] - Cadastrar novo cliente\n[2] - Alterar plano (realizar pedido)\n[3] - Desativar cliente\n[4] - Reativar cliente\n[5] - Excluir cliente\n[6] - Listar clientes\n[7] - Sair\n");
     scanf("%d", &opcao);
 
     system("cls");

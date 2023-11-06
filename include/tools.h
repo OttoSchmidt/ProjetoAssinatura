@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
+#include <windows.h>
 
 typedef struct {
     char numeroCartao[21], nome[31], vencimento[6], uf[3], endereco[31], numeroResidencial[11];
@@ -134,10 +135,36 @@ void quickSort(Cadastro *clientes, int *ordem, int min, int max)
 	}
 }
 
-void importarDados(FILE *arq, Cadastro *clientes, int *ordem, int *quant, int *identificador) {
+Cadastro* importarDados(FILE *arq, Cadastro *clientes, int **ordem, int *quant, int *identificador) {
+    char c;
+    *quant = 0;
+
+    //pular a primeira linha do arquivo
+    do {
+        c = fgetc(arq);
+    } while (c != '\n');
+
     while (!feof(arq)) {
-        //
+        clientes = (Cadastro *) realloc(clientes, (*quant + 1) * sizeof(Cadastro));
+        *ordem = (int *) realloc(*ordem, (*quant + 1) * sizeof(int));
+        if (*ordem == NULL || clientes == NULL) {
+            return NULL;
+        }
 
+        fscanf(arq,
+               "%d;%d;%30[^;];%11[^;];%11[^;];%30[^;];%d;%d;%30[^;];%20[^;];%5[^;];%d;%2[^;];%d;%30[^;];%10[^;];\n",
+               &clientes[*quant].numeroCliente, &clientes[*quant].ativo, clientes[*quant].nome, clientes[*quant].cpf,
+               clientes[*quant].telefone, clientes[*quant].email, &clientes[*quant].tipoAssinatura,
+               &clientes[*quant].renovacaoAutomatica, clientes[*quant].pagamento.nome,
+               clientes[*quant].pagamento.numeroCartao, clientes[*quant].pagamento.vencimento,
+               &clientes[*quant].pagamento.ccv, clientes[*quant].pagamento.uf, &clientes[*quant].pagamento.cep,
+               clientes[*quant].pagamento.endereco, clientes[*quant].pagamento.numeroResidencial);
+        *ordem[*quant] = clientes[*quant].numeroCliente;
 
+        *quant += 1;
     }
+
+    *identificador = clientes[*quant - 1].numeroCliente;
+
+    return clientes;
 }
