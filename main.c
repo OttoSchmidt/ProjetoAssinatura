@@ -35,10 +35,6 @@ int main () {
         }
 
         mergeSort(clientes, ordemAlfabeticaIndices, 0, quantClientes-1);
-
-        printf("Ordenacao:\nValor 0: %d -- Valor 1: %d\n", ordemAlfabeticaIndices[0], ordemAlfabeticaIndices[1]);
-
-        Sleep(2000);
     }
 
     while (1) {
