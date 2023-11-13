@@ -112,9 +112,28 @@ int cadastroNovoCliente (Cadastro *clientes, int i, int novoNumeroCliente) {
     return 0;
 }
 
-int buscarCliente(Cadastro *clientes, int numeroBuscado, int tam) {
+/*int buscarCliente(Cadastro *clientes, int numeroBuscado, int tam) {
     for (int i = 0; i < tam; i++) {
         if ((clientes+i)->numeroCliente == numeroBuscado) return i;
+    }
+
+    return -1;
+}*/
+
+//buscar cliente com base no nome usando busca binaria
+int buscarCliente (Cadastro *clientes, int quant, int num) {
+    int inicio = 0, fim = quant - 1, meio;
+
+    while (inicio <= fim) {
+        meio = inicio + (fim - inicio) / 2;
+
+        if ((clientes+meio)->numeroCliente == num) {
+            return meio;
+        } else if ((clientes+meio)->numeroCliente < num) {
+            inicio = meio + 1;
+        } else {
+            fim = meio - 1;
+        }
     }
 
     return -1;
@@ -150,9 +169,17 @@ void imprimirClienteInd(Cadastro *clientes, int i) {
 }
 
 void imprimirClientes(Cadastro *clientes, int *ordemAlfabetica, int tipo, int tam, int *clienteSelecionado) {
+    int j;
+
     if (tipo == 2) {
         for (int i = 0; i < tam; i++) {
-            imprimirClienteInd(clientes, buscarCliente(clientes, ordemAlfabetica[i], tam));
+            j = buscarCliente(clientes, tam, ordemAlfabetica[i]);
+            if (j == -1) {
+                printf("Cliente nao encontrado\n");
+                continue;
+            }
+
+            imprimirClienteInd(clientes, j);
         }
     } else {
         for (int i = 0; i < tam; i++) {
