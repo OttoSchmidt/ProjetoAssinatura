@@ -17,6 +17,7 @@ int main () {
         arq = fopen("clientes.csv", "r");
         if (arq == NULL) {
             printf("Erro ao abrir o arquivo\n");
+            Sleep(2000);
         } else {
             clientes = importarDados(arq, clientes, &ordemAlfabeticaIndices, &quantClientes, &identificadorCliente);
             fclose(arq);
@@ -32,6 +33,12 @@ int main () {
                 Sleep(2000);
             }
         }
+
+        mergeSort(clientes, ordemAlfabeticaIndices, 0, quantClientes-1);
+
+        printf("Ordenacao:\nValor 0: %d -- Valor 1: %d\n", ordemAlfabeticaIndices[0], ordemAlfabeticaIndices[1]);
+
+        Sleep(2000);
     }
 
     while (1) {
@@ -41,7 +48,7 @@ int main () {
         if (opcaoSelecionada == 7) {
             arq = fopen("clientes.csv", "w");
             if (arq == NULL) {
-                printf("Nao foi possivl abrir o arquivo\nDeseja sair (0 - nao // 1 - sim): ");
+                printf("Nao foi possivel abrir o arquivo\nDeseja sair (0 - nao // 1 - sim): ");
                 scanf("%d", &opcaoSelecionada);
 
                 if (opcaoSelecionada == 1) {
@@ -71,7 +78,7 @@ int main () {
                     clientes = (Cadastro*) realloc(clientes, quantClientes * sizeof(Cadastro));
                     ordemAlfabeticaIndices = (int*) realloc(ordemAlfabeticaIndices, quantClientes * sizeof(int));
                 } else {
-                    quickSort(clientes, ordemAlfabeticaIndices, 0, quantClientes-1);
+                    mergeSort(clientes, ordemAlfabeticaIndices, 0, quantClientes-1);
                 }
 
                 break;
@@ -153,7 +160,7 @@ int main () {
                     clientes = excluirCliente(clientes, num, &clienteCopiado, quantClientes);
                     quantClientes--;
                     recriarIndices(ordemAlfabeticaIndices, quantClientes);
-                    quickSort(clientes, ordemAlfabeticaIndices, 0, quantClientes-1);
+                    mergeSort(clientes, ordemAlfabeticaIndices, 0, quantClientes-1);
                 }
 
                 printf("QUANTIDADE CLIENTES: %d\n", quantClientes);

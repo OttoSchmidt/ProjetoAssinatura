@@ -16,13 +16,6 @@ typedef struct {
     DadosPagamentos pagamento;
 } Cadastro;
 
-//Troca os valores de duas variaveis
-void trocar(int *a, int *b) {
-	int temp = *a;
-	*a = *b;
-	*b = temp;
-}
-
 //Transforma todas as letras em maiusculas
 void upperCase (char *string) {
     while (*string != '\0') {
@@ -105,34 +98,45 @@ int validarCartao(const char *cartao) {
     }
 }
 
-int dividir(Cadastro *clientes, int *ordem, int min, int max) {
-	int pivot = ordem[max], i = (min - 1);
+void mergeSort (Cadastro *clientes, int *ordem, int min, int max) {
+    int metade, *vetTemp, i, j, k, comp;
 
-	for (int j = min; j <= max - 1; j++) {
-		// se o elemento atual for menor, trocar com o pivot
-		if (strcmp(clientes[ordem[j]].nome, clientes[pivot].nome) < 0) {
-			i++;
-			trocar(&ordem[i], &ordem[j]);
-		}
-	}
+    if (min == max) return;
 
-	trocar(&ordem[i + 1], &ordem[max]);
-	return (i + 1);
-}
+    metade = (min + max) / 2;
+    vetTemp = (int*) malloc((max - min + 1) * sizeof(int));
 
-// string[][] -> Vetor com as strings
-// ordem[] -> Vetor para ser organizado (usando string como referencia),
-// min -> Indice inicial,
-// max -> Indice final
-void quickSort(Cadastro *clientes, int *ordem, int min, int max)
-{
-	if (min < max) {
-		int particao = dividir(clientes, ordem, min, max);
+    i = min;
+    j = metade + 1;
+    k = 0;
 
-		//Organiza elementos antes e depois da particao
-		quickSort(clientes, ordem, min, particao - 1);
-		quickSort(clientes, ordem, particao + 1, max);
-	}
+    while (i <= metade || j <= max) {
+        if (i > metade) {
+            vetTemp[k] = ordem[j];
+            j++;
+        } else if (j > max) {
+            vetTemp[k] = ordem[i];
+            i++;
+        } else {
+            comp = strcmp(clientes[ordem[i]].nome, clientes[ordem[j]].nome);
+
+            if (comp < 0) {
+                vetTemp[k] = ordem[j];
+                j++;
+            } else {
+                vetTemp[k] = ordem[i];
+                i++;
+            }
+        }
+
+        k++;
+    }
+
+    for (i = min; i <= max; i++) {
+        ordem[i] = vetTemp[i - min];
+    }
+
+    free(vetTemp);
 }
 
 Cadastro* importarDados(FILE *arq, Cadastro *clientes, int **ordem, int *quant, int *identificador) {
@@ -147,7 +151,10 @@ Cadastro* importarDados(FILE *arq, Cadastro *clientes, int **ordem, int *quant, 
     while (!feof(arq)) {
         clientes = (Cadastro *) realloc(clientes, (*quant + 1) * sizeof(Cadastro));
         *ordem = (int *) realloc(*ordem, (*quant + 1) * sizeof(int));
+
         if (*ordem == NULL || clientes == NULL) {
+            printf("ERRO AO ALOCAR O VETOR\n");
+            Sleep(2000);
             return NULL;
         }
 
@@ -159,8 +166,9 @@ Cadastro* importarDados(FILE *arq, Cadastro *clientes, int **ordem, int *quant, 
                clientes[*quant].pagamento.numeroCartao, clientes[*quant].pagamento.vencimento,
                &clientes[*quant].pagamento.ccv, clientes[*quant].pagamento.uf, &clientes[*quant].pagamento.cep,
                clientes[*quant].pagamento.endereco, clientes[*quant].pagamento.numeroResidencial);
-        *ordem[*quant] = clientes[*quant].numeroCliente;
 
+        //colocar o id cliente no vetor ordem
+        *(*ordem + *quant) = clientes[*quant].numeroCliente;
         *quant += 1;
     }
 

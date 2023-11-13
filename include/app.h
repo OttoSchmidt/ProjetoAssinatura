@@ -1,6 +1,6 @@
 #include "tools.h"
 
-const char tiposAssinatura[3][9] = {"Starter", "Standard", "Premium"};
+const char tiposAssinatura[3][9] = {"Pro", "Max", "Ultra"};
 
 int menu () {
     int opcao;
@@ -152,7 +152,7 @@ void imprimirClienteInd(Cadastro *clientes, int i) {
 void imprimirClientes(Cadastro *clientes, int *ordemAlfabetica, int tipo, int tam, int *clienteSelecionado) {
     if (tipo == 2) {
         for (int i = 0; i < tam; i++) {
-            imprimirClienteInd(clientes, ordemAlfabetica[i]);
+            imprimirClienteInd(clientes, buscarCliente(clientes, ordemAlfabetica[i], tam));
         }
     } else {
         for (int i = 0; i < tam; i++) {
