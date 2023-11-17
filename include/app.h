@@ -112,15 +112,7 @@ int cadastroNovoCliente (Cadastro *clientes, int i, int novoNumeroCliente) {
     return 0;
 }
 
-/*int buscarCliente(Cadastro *clientes, int numeroBuscado, int tam) {
-    for (int i = 0; i < tam; i++) {
-        if ((clientes+i)->numeroCliente == numeroBuscado) return i;
-    }
-
-    return -1;
-}*/
-
-//buscar cliente com base no nome usando busca binaria
+//buscar cliente usando busca binaria
 int buscarCliente (Cadastro *clientes, int quant, int num) {
     int inicio = 0, fim = quant - 1, meio;
 
@@ -169,17 +161,9 @@ void imprimirClienteInd(Cadastro *clientes, int i) {
 }
 
 void imprimirClientes(Cadastro *clientes, int *ordemAlfabetica, int tipo, int tam, int *clienteSelecionado) {
-    int j;
-
     if (tipo == 2) {
         for (int i = 0; i < tam; i++) {
-            j = buscarCliente(clientes, tam, ordemAlfabetica[i]);
-            if (j == -1) {
-                printf("Cliente nao encontrado\n");
-                continue;
-            }
-
-            imprimirClienteInd(clientes, j);
+            imprimirClienteInd(clientes, ordemAlfabetica[i]);
         }
     } else {
         for (int i = 0; i < tam; i++) {
@@ -187,6 +171,6 @@ void imprimirClientes(Cadastro *clientes, int *ordemAlfabetica, int tipo, int ta
         }
     }
 
-    printf("\nInsira o numero do cliente que deseja copiar para futura operacoes (caso nao precise, digite 0): ");
+    printf("\nInsira o numero do cliente que deseja copiar para futura operacoes (caso nao precise, digite -1): ");
     scanf("%d", clienteSelecionado);
 }

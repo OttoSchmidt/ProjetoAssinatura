@@ -118,9 +118,9 @@ void mergeSort (Cadastro *clientes, int *ordem, int min, int max) {
             vetTemp[k] = ordem[i];
             i++;
         } else {
-            comp = strcmp(clientes[ordem[i]].nome, clientes[ordem[j]].nome);
+            comp = strcmp(clientes[ordem[j]].nome, clientes[ordem[i]].nome);
 
-            if (comp < 0) {
+            if (comp > 0) {
                 vetTemp[k] = ordem[j];
                 j++;
             } else {
@@ -141,6 +141,7 @@ void mergeSort (Cadastro *clientes, int *ordem, int min, int max) {
 
 Cadastro* importarDados(FILE *arq, Cadastro *clientes, int **ordem, int *quant, int *identificador) {
     char c;
+    int i = 0;
     *quant = 0;
 
     //pular a primeira linha do arquivo
@@ -168,11 +169,13 @@ Cadastro* importarDados(FILE *arq, Cadastro *clientes, int **ordem, int *quant, 
                clientes[*quant].pagamento.endereco, clientes[*quant].pagamento.numeroResidencial);
 
         //colocar o id cliente no vetor ordem
-        *(*ordem + *quant) = clientes[*quant].numeroCliente;
+        *(*ordem + *quant) = i++;
         *quant += 1;
     }
 
     *identificador = clientes[*quant - 1].numeroCliente;
+
+    mergeSort(clientes, *ordem, 0, *quant - 1);
 
     return clientes;
 }

@@ -65,7 +65,7 @@ int main () {
                 clientes = (Cadastro*) realloc(clientes, quantClientes * sizeof(Cadastro));
                 ordemAlfabeticaIndices = (int*) realloc(ordemAlfabeticaIndices, quantClientes * sizeof(int));
 
-                if (quantClientes > 0) ordemAlfabeticaIndices[quantClientes-1] = quantClientes-1;
+                if (quantClientes > 0) ordemAlfabeticaIndices[quantClientes-1] = quantClientes - 1;
 
                 if (cadastroNovoCliente(clientes, quantClientes - 1, identificadorCliente) == -1) { //cadastro invalidado
                     identificadorCliente--;
@@ -87,20 +87,23 @@ int main () {
                 printf("Informe o numero do cliente para alterar o plano: ");
                 scanf("%d", &num);
 
-                num = buscarCliente(clientes, num, quantClientes);
+                num = buscarCliente(clientes, quantClientes, num);
 
                 if (num == -1) {
                     printf("CLIENTE NAO ENCONTRADO\n");
                 } else {
-                    printf("PLANO ATUAL: %s\n\nPLANOS DISPONIVEIS:\n\t1 - Starter\n\t2 - Standard\n\t3 - Premium\nPlano escolhido: ", tiposAssinatura[clientes[num].tipoAssinatura - 1]);
+                    printf("PLANO ATUAL: %s\n\nPLANOS DISPONIVEIS:\n\t1 - Pro\n\t2 - Max\n\t3 - Ultra\nPlano escolhido: ", tiposAssinatura[clientes[num].tipoAssinatura - 1]);
                     scanf("%d", &opcaoSelecionada);
 
                     if (opcaoSelecionada < 1 || opcaoSelecionada > 3) {
                         printf("Opcao invalida\n");
                     } else {
+                        printf("PLANO ATUALIZADO\n");
                         clientes[num].tipoAssinatura = opcaoSelecionada;
                     }
                 }
+
+                Sleep(2000);
 
                 break;
             case 3: //desativar cliente
@@ -112,14 +115,16 @@ int main () {
                 printf("\nInforme o numero do cliente a ser desativado: ");
                 scanf("%d", &num);
 
-                num = buscarCliente(clientes, num, quantClientes);
+                num = buscarCliente(clientes, quantClientes, num);
 
                 if (num == -1) {
                     printf("CLIENTE NAO ENCONTRADO\n");
                 } else {
+                    printf("CLIENTE DESATIVADO\n");
                     clientes[num].ativo = false;
                 }
 
+                Sleep(2000);
                 break;
             case 4: //reativar cliente
                 if (clienteCopiado != -1) {
@@ -130,13 +135,16 @@ int main () {
                 printf("\nInforme o numero do cliente a ser reativado: ");
                 scanf("%d", &num);
 
-                num = buscarCliente(clientes, num, quantClientes);
+                num = buscarCliente(clientes, quantClientes, num);
 
                 if (num == -1) {
                     printf("CLIENTE NÃO ENCONTRADO\n");
                 } else {
+                    printf("CLIENTE REATIVADO\n");
                     clientes[num].ativo = true;
                 }
+
+                Sleep(2000);
 
                 break;
             case 5: //excluir cliente
@@ -148,7 +156,7 @@ int main () {
                 printf("\nInforme o numero do cliente a ser excluido: ");
                 scanf("%d", &num);
 
-                num = buscarCliente(clientes, num, quantClientes);
+                num = buscarCliente(clientes, quantClientes, num);
 
                 if (num == -1) {
                     printf("CLIENTE NÃO ENCONTRADO\n");
@@ -160,6 +168,7 @@ int main () {
                 }
 
                 printf("QUANTIDADE CLIENTES: %d\n", quantClientes);
+                Sleep(2000);
 
                 break;
             case 6: //imprimir lista clientes
@@ -172,8 +181,8 @@ int main () {
                     imprimirClientes(clientes, ordemAlfabeticaIndices, num, quantClientes, &clienteCopiado);
                 }
 
-                if (clienteCopiado != 0) {
-                    clienteCopiado = buscarCliente(clientes, clienteCopiado, quantClientes);
+                if (clienteCopiado != -1) {
+                    clienteCopiado = buscarCliente(clientes, quantClientes, clienteCopiado);
                 }
 
                 break;
