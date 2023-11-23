@@ -94,7 +94,7 @@ int cadastroNovoCliente (Cadastro *clientes, int i, int novoNumeroCliente) {
     printf("Informe o email: ");
     scanf(" %30[^\n]", (clientes + i)->email);
 
-    printf("OPCOES DE PLANOS:\n\t1 - Starter\n\t2 - Standard\n\t3 - Premium\nInforme o tipo de assinatura: ");
+    printf("OPCOES DE PLANOS:\n\t1 - Pro\n\t2 - Max\n\t3 - Ultra\nInforme o tipo de assinatura: ");
     scanf("%d", &(clientes + i)->tipoAssinatura);
 
     printf("Ativar renovacao automatica (0 - nao / 1 - sim): ");

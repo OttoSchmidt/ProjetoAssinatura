@@ -17,23 +17,23 @@ typedef struct {
 } Cadastro;
 
 //Transforma todas as letras em maiusculas
-void upperCase (char *string) {
+void upperCase(char *string) {
     while (*string != '\0') {
         if (*string >= 97 && *string <= 122) {
-            string -= 32;
+            *string -= 32;
         }
 
         string++;
     }
 }
 
-void recriarIndices (int *indices, int quant) {
+void recriarIndices(int *indices, int quant) {
     for (int i = 0; i < quant; i++) {
         *(indices + i) = i;
     }
 }
 
-int validarCPF (const char *cpf) {
+int validarCPF(const char *cpf) {
     int digitosVerificadores[2];
     bool digitosIguais = true;
 
@@ -98,13 +98,20 @@ int validarCartao(const char *cartao) {
     }
 }
 
-void mergeSort (Cadastro *clientes, int *ordem, int min, int max) {
+void mergeSort(Cadastro *clientes, int *ordem, int min, int max) {
     int metade, *vetTemp, i, j, k, comp;
+    char *temp1, *temp2;
 
     if (min == max) return;
 
     metade = (min + max) / 2;
-    vetTemp = (int*) malloc((max - min + 1) * sizeof(int));
+
+    mergeSort(clientes, ordem, min, metade);
+    mergeSort(clientes, ordem, metade+1, max);
+
+    vetTemp = (int *) malloc((max - min + 1) * sizeof(int));
+    temp1 = (char*) malloc(sizeof(char) * 31);
+    temp2 = (char*) malloc(sizeof(char) * 31);
 
     i = min;
     j = metade + 1;
@@ -118,9 +125,15 @@ void mergeSort (Cadastro *clientes, int *ordem, int min, int max) {
             vetTemp[k] = ordem[i];
             i++;
         } else {
-            comp = strcmp(clientes[ordem[j]].nome, clientes[ordem[i]].nome);
+            strcpy(temp1, clientes[ordem[i]].nome);
+            strcpy(temp2, clientes[ordem[j]].nome);
 
-            if (comp > 0) {
+            upperCase(temp1);
+            upperCase(temp2);
+
+            comp = strcmp(temp2, temp1);
+
+            if (comp < 0) {
                 vetTemp[k] = ordem[j];
                 j++;
             } else {
@@ -136,10 +149,12 @@ void mergeSort (Cadastro *clientes, int *ordem, int min, int max) {
         ordem[i] = vetTemp[i - min];
     }
 
+    free(temp2);
+    free(temp1);
     free(vetTemp);
 }
 
-Cadastro* importarDados(FILE *arq, Cadastro *clientes, int **ordem, int *quant, int *identificador) {
+Cadastro *importarDados(FILE *arq, Cadastro *clientes, int **ordem, int *quant, int *identificador) {
     char c;
     int i = 0;
     *quant = 0;
