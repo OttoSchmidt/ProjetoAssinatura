@@ -5,7 +5,32 @@ const char tiposAssinatura[3][9] = {"Pro", "Max", "Ultra"};
 int menu () {
     int opcao;
 
-    printf("[1] - Cadastrar novo cliente\n[2] - Alterar plano (realizar pedido)\n[3] - Desativar cliente\n[4] - Reativar cliente\n[5] - Excluir cliente\n[6] - Listar clientes\n[7] - Sair\n");
+    int width = 50; // Defina a largura do console
+    char *str1 = "|     ____  _              ____  _           _    ";
+    char *str2 = "|    |  _ \\| |            / ___ | |__   __ _| | __";
+    char *str3 = "|    | |_) | |_   _  ___  \\___ \\| '_ \\ / _` | |/ /";
+    char *str4 = "|    |  _ <| | | | |/ _ \\  ___) | | | | (_| |   < ";
+    char *str5 = "|    | |_) | | |_| |  __/ |____/|_| |_|\\__,_|_|\\_\\";
+    char *str6 = "|    |____/|_|\\__,_|\\___|                          ";
+
+    printf("%*s\n", (strlen(str1) + width) / 2, str1);
+    printf("%*s\n", (strlen(str2) + width) / 2, str2);
+    printf("%*s\n", (strlen(str3) + width) / 2, str3);
+    printf("%*s\n", (strlen(str4) + width) / 2, str4);
+    printf("%*s\n", (strlen(str5) + width) / 2, str5);
+    printf("%*s\n", (strlen(str6) + width) / 2, str6);
+
+    printf("|_____________________________________________________________________ \n");
+    printf("|                                                                     |\n");
+    printf("|       [1] - Cadastrar novo cliente                                  |\n");
+    printf("|       [2] - Alterar plano (realizar pedido)                         |\n");
+    printf("|       [3] - Desativar cliente                                       |\n");
+    printf("|       [4] - Reativar cliente                                        |\n");
+    printf("|       [5] - Excluir cliente                                         |\n");
+    printf("|       [6] - Listar clientes                                         |\n");
+    printf("|       [7] - Sair                                                    |\n");
+    printf("|_____________________________________________________________________|\n");
+
     scanf("%d", &opcao);
 
     system("cls");
@@ -16,18 +41,21 @@ int menu () {
 int cadastroClientePagamento (DadosPagamentos *pagamento) {
     system("cls");
 
-    printf("Informe o nome no cartao: ");
+    printf(" _____________________________________________________________________ \n");
+    printf("|       DADOS DE PAGAMENTO                                            |\n\n");
+
+    printf("       Informe o nome no cartao: ");
     scanf(" %30[^\n]", pagamento->nome);
     upperCase(pagamento->nome);
 
     while (1) {
-        printf("Informe o numero do cartao (somente numeros): ");
+        printf("       Informe o numero do cartao (somente numeros): ");
         scanf(" %20[^\n]", pagamento->numeroCartao);
 
         if (validarCartao(pagamento->numeroCartao) != 0) {
             int continuar;
 
-            printf("NUMERO DO CARTAO INVALIDO\nDESEJA TENTAR NOVAMENTE (0 - nao, 1 - sim): ");
+            printf("       NUMERO DO CARTAO INVALIDO\n\n       DESEJA TENTAR NOVAMENTE (0 - nao, 1 - sim): ");
             scanf("%d", &continuar);
 
             if (!continuar) return -1;
@@ -38,23 +66,23 @@ int cadastroClientePagamento (DadosPagamentos *pagamento) {
         break;
     }
 
-    printf("Informe a data de vencimento: ");
+    printf("       Informe a data de vencimento: ");
     scanf(" %5[^\n]", pagamento->vencimento);
 
-    printf("Informe o CCV: ");
+    printf("       Informe o CCV: ");
     scanf("%d", &pagamento->ccv);
 
-    printf("Informe a sigla do estado: ");
+    printf("       Informe a sigla do estado: ");
     scanf(" %s", pagamento->uf);
     upperCase(pagamento->uf);
 
-    printf("Informe o CEP: ");
+    printf("       Informe o CEP: ");
     scanf("%d", &pagamento->cep);
 
-    printf("Informe o endereco: ");
+    printf("       Informe o endereco: ");
     scanf(" %30[^\n]", pagamento->endereco);
 
-    printf("Informe o numero da residencia: ");
+    printf("       Informe o numero da residencia: ");
     scanf(" %10[^\n]", pagamento->numeroResidencial);
 
     return 0;
@@ -67,11 +95,14 @@ int cadastroNovoCliente (Cadastro *clientes, int i, int novoNumeroCliente) {
 
     system("cls");
 
-    printf("Informe o nome: ");
+    printf(" _____________________________________________________________________ \n");
+    printf("|       CADASTRO CLIENTE                                              |\n\n");
+
+    printf("       Informe o nome: ");
     scanf(" %30[^\n]", (clientes + i)->nome);
 
     while (1) {
-        printf("Informe o CPF (somente numeros): ");
+        printf("       Informe o CPF (somente numeros): ");
         scanf(" %11[^\n]", (clientes + i)->cpf);
 
         if (validarCPF(clientes[i].cpf) == -1) {
@@ -88,16 +119,16 @@ int cadastroNovoCliente (Cadastro *clientes, int i, int novoNumeroCliente) {
         break;
     }
 
-    printf("Informe o telefone (somente numeros): ");
+    printf("       Informe o telefone (somente numeros): ");
     scanf(" %11[^\n]", (clientes + i)->telefone);
 
-    printf("Informe o email: ");
+    printf("       Informe o email: ");
     scanf(" %30[^\n]", (clientes + i)->email);
 
-    printf("OPCOES DE PLANOS:\n\t1 - Pro\n\t2 - Max\n\t3 - Ultra\nInforme o tipo de assinatura: ");
+    printf("\n\n       OPCOES DE PLANOS:\n\t       1 - Pro\n\t       2 - Max\n\t       3 - Ultra\n\n       Informe o tipo de assinatura: ");
     scanf("%d", &(clientes + i)->tipoAssinatura);
 
-    printf("Ativar renovacao automatica (0 - nao / 1 - sim): ");
+    printf("\n\n       Ativar renovacao automatica (0 - nao / 1 - sim): ");
     scanf("%d", &renovacaoAutomaticaTemp);
 
     if (renovacaoAutomaticaTemp) {
@@ -108,7 +139,7 @@ int cadastroNovoCliente (Cadastro *clientes, int i, int novoNumeroCliente) {
 
     if (cadastroClientePagamento(&(clientes + i)->pagamento) != 0) return -1;
 
-    printf("ID CLIENTE: %d\n", (clientes + i)->numeroCliente);
+    printf("       ID CLIENTE: %d\n", (clientes + i)->numeroCliente);
     return 0;
 }
 

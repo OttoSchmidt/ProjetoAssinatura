@@ -9,8 +9,32 @@ int main () {
     clientes = (Cadastro*) malloc(0);
     ordemAlfabeticaIndices = (int*) malloc(0);
 
-    printf("Deseja importar arquivo 'clientes.csv' com dados ou iniciar do zero (0 - nao // 1 - sim): ");
-    scanf("%d", &opcaoSelecionada);
+    int width = 50; // Defina a largura do console
+    char *str1 = "|     ____  _              ____  _           _    ";
+    char *str2 = "|    |  _ \\| |            / ___ | |__   __ _| | __";
+    char *str3 = "|    | |_) | |_   _  ___  \\___ \\| '_ \\ / _` | |/ /";
+    char *str4 = "|    |  _ <| | | | |/ _ \\  ___) | | | | (_| |   < ";
+    char *str5 = "|    | |_) | | |_| |  __/ |____/|_| |_|\\__,_|_|\\_\\";
+    char *str6 = "|    |____/|_|\\__,_|\\___|                          ";
+
+    printf("%*s\n", (strlen(str1) + width) / 2, str1);
+    printf("%*s\n", (strlen(str2) + width) / 2, str2);
+    printf("%*s\n", (strlen(str3) + width) / 2, str3);
+    printf("%*s\n", (strlen(str4) + width) / 2, str4);
+    printf("%*s\n", (strlen(str5) + width) / 2, str5);
+    printf("%*s\n", (strlen(str6) + width) / 2, str6);
+
+    printf("|_____________________________________________________________________\n");
+    printf("|                                                                     |\n");
+    printf("| DESEJA IMPORTAR ARQUIVO 'CLIENTES.CSV' COM DADOS OU INICIAR DO ZERO |\n");
+    printf("|                                                                     |\n");
+    printf("|                                                                     |\n");
+    printf("|                               0 - NAO                               |\n");
+    printf("|                               1 - SIM                               |\n");
+    printf("|                                                                     |\n");
+    printf("|_____________________________________________________________________|\n");
+
+    scanf("\n\n%d", &opcaoSelecionada);
 
     if (opcaoSelecionada) {
         //importar .csv
@@ -23,12 +47,24 @@ int main () {
             fclose(arq);
 
             if (clientes == NULL || ordemAlfabeticaIndices == NULL) {
+                printf("%*s\n", (strlen(str1) + width) / 2, str1);
+                printf("%*s\n", (strlen(str2) + width) / 2, str2);
+                printf("%*s\n", (strlen(str3) + width) / 2, str3);
+                printf("%*s\n", (strlen(str4) + width) / 2, str4);
+                printf("%*s\n", (strlen(str5) + width) / 2, str5);
+                printf("%*s\n", (strlen(str6) + width) / 2, str6);
                 printf("Erro ao importar o arquivo\n");
                 Sleep(2000);
                 return -2;
             }
 
             if (quantClientes == 0) {
+                printf("%*s\n", (strlen(str1) + width) / 2, str1);
+                printf("%*s\n", (strlen(str2) + width) / 2, str2);
+                printf("%*s\n", (strlen(str3) + width) / 2, str3);
+                printf("%*s\n", (strlen(str4) + width) / 2, str4);
+                printf("%*s\n", (strlen(str5) + width) / 2, str5);
+                printf("%*s\n", (strlen(str6) + width) / 2, str6);
                 printf("Nenhum cliente encontrado no arquivo\n");
                 Sleep(2000);
             }
@@ -44,8 +80,19 @@ int main () {
         if (opcaoSelecionada == 7) {
             arq = fopen("clientes.csv", "w");
             if (arq == NULL) {
-                printf("Nao foi possivel abrir o arquivo\nDeseja sair (0 - nao // 1 - sim): ");
-                scanf("%d", &opcaoSelecionada);
+
+                printf("|_____________________________________________________________________|\n");
+                printf("|                                                                     |\n");
+                printf("|                   NAO FOI POSSIVEL ABRIR O ARQUIVO                  |\n");
+                printf("|                             DESEJA SAIR                             |\n");
+                printf("|                                                                     |\n");
+                printf("|                               0 - NAO                               |\n");
+                printf("|                               1 - SIM                               |\n");
+                printf("|                                                                     |\n");
+                printf("|_____________________________________________________________________|\n");
+
+
+                scanf("%d\n\n\n", &opcaoSelecionada);
 
                 if (opcaoSelecionada == 1) {
                     break;
@@ -172,7 +219,16 @@ int main () {
 
                 break;
             case 6: //imprimir lista clientes
-                printf("Selecione a forma para ordernar (1 - numerico, 2 - alfabetico): ");
+
+                printf("|_____________________________________________________________________|\n");
+                printf("|                                                                     |\n");
+                printf("|                   SELECIONE A FORMA PARA ORDERNAR                   |\n");
+                printf("|                                                                     |\n");
+                printf("|                            1 - NUMERICO                             |\n");
+                printf("|                            2 - ALFABETICO                           |\n");
+                printf("|                                                                     |\n");
+                printf("|_____________________________________________________________________|\n");
+
                 scanf("%d", &num);
 
                 if (num != 1 && num != 2) {
@@ -191,6 +247,8 @@ int main () {
     }
 
     //armazenar clientes em .csv
+
+
     fprintf(arq, "ID CLIENTE;ATIVO;NOME CLIENTE;CPF;TELEFONE;EMAIL;TIPO ASSINATURA;RENOVACAO AUTOMATICA;NOME CARTAO;NUM CARTAO;DATA VENCIMENTO;CCV;UF;CEP;ENDERECO;NUMERO;\n");
     for (int i = 0; i < quantClientes; i++) {
         fprintf(arq, "%d;%d;%s;%s;%s;%s;%d;%d;%s;%s;%s;%d;%s;%d;%s;%s;\n", clientes[i].numeroCliente, clientes[i].ativo, clientes[i].nome, clientes[i].cpf, clientes[i].telefone, clientes[i].email, clientes[i].tipoAssinatura, clientes[i].renovacaoAutomatica, clientes[i].pagamento.nome, clientes[i].pagamento.numeroCartao, clientes[i].pagamento.vencimento, clientes[i].pagamento.ccv, clientes[i].pagamento.uf, clientes[i].pagamento.cep, clientes[i].pagamento.endereco, clientes[i].pagamento.numeroResidencial);
