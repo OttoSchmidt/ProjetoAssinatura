@@ -2,9 +2,7 @@
 
 const char tiposAssinatura[3][9] = {"Pro", "Max", "Ultra"};
 
-int menu () {
-    int opcao;
-
+void logo() {
     int width = 50; // Defina a largura do console
     char *str1 = "|     ____  _              ____  _           _    ";
     char *str2 = "|    |  _ \\| |            / ___ | |__   __ _| | __";
@@ -19,6 +17,12 @@ int menu () {
     printf("%*s\n", (strlen(str4) + width) / 2, str4);
     printf("%*s\n", (strlen(str5) + width) / 2, str5);
     printf("%*s\n", (strlen(str6) + width) / 2, str6);
+}
+
+int menu () {
+    int opcao;
+
+    logo();
 
     printf("|_____________________________________________________________________ \n");
     printf("|                                                                     |\n");

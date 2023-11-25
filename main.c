@@ -9,20 +9,7 @@ int main () {
     clientes = (Cadastro*) malloc(0);
     ordemAlfabeticaIndices = (int*) malloc(0);
 
-    int width = 50; // Defina a largura do console
-    char *str1 = "|     ____  _              ____  _           _    ";
-    char *str2 = "|    |  _ \\| |            / ___ | |__   __ _| | __";
-    char *str3 = "|    | |_) | |_   _  ___  \\___ \\| '_ \\ / _` | |/ /";
-    char *str4 = "|    |  _ <| | | | |/ _ \\  ___) | | | | (_| |   < ";
-    char *str5 = "|    | |_) | | |_| |  __/ |____/|_| |_|\\__,_|_|\\_\\";
-    char *str6 = "|    |____/|_|\\__,_|\\___|                          ";
-
-    printf("%*s\n", (strlen(str1) + width) / 2, str1);
-    printf("%*s\n", (strlen(str2) + width) / 2, str2);
-    printf("%*s\n", (strlen(str3) + width) / 2, str3);
-    printf("%*s\n", (strlen(str4) + width) / 2, str4);
-    printf("%*s\n", (strlen(str5) + width) / 2, str5);
-    printf("%*s\n", (strlen(str6) + width) / 2, str6);
+    logo();
 
     printf("|_____________________________________________________________________\n");
     printf("|                                                                     |\n");
@@ -47,24 +34,14 @@ int main () {
             fclose(arq);
 
             if (clientes == NULL || ordemAlfabeticaIndices == NULL) {
-                printf("%*s\n", (strlen(str1) + width) / 2, str1);
-                printf("%*s\n", (strlen(str2) + width) / 2, str2);
-                printf("%*s\n", (strlen(str3) + width) / 2, str3);
-                printf("%*s\n", (strlen(str4) + width) / 2, str4);
-                printf("%*s\n", (strlen(str5) + width) / 2, str5);
-                printf("%*s\n", (strlen(str6) + width) / 2, str6);
+                logo();
                 printf("Erro ao importar o arquivo\n");
                 Sleep(2000);
                 return -2;
             }
 
             if (quantClientes == 0) {
-                printf("%*s\n", (strlen(str1) + width) / 2, str1);
-                printf("%*s\n", (strlen(str2) + width) / 2, str2);
-                printf("%*s\n", (strlen(str3) + width) / 2, str3);
-                printf("%*s\n", (strlen(str4) + width) / 2, str4);
-                printf("%*s\n", (strlen(str5) + width) / 2, str5);
-                printf("%*s\n", (strlen(str6) + width) / 2, str6);
+                logo();
                 printf("Nenhum cliente encontrado no arquivo\n");
                 Sleep(2000);
             }
