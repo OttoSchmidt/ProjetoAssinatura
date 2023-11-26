@@ -3,20 +3,12 @@
 const char tiposAssinatura[3][9] = {"Pro", "Max", "Ultra"};
 
 void logo() {
-    int width = 50; // Defina a largura do console
-    char *str1 = "|     ____  _              ____  _           _    ";
-    char *str2 = "|    |  _ \\| |            / ___ | |__   __ _| | __";
-    char *str3 = "|    | |_) | |_   _  ___  \\___ \\| '_ \\ / _` | |/ /";
-    char *str4 = "|    |  _ <| | | | |/ _ \\  ___) | | | | (_| |   < ";
-    char *str5 = "|    | |_) | | |_| |  __/ |____/|_| |_|\\__,_|_|\\_\\";
-    char *str6 = "|    |____/|_|\\__,_|\\___|                          ";
-
-    printf("%*s\n", (strlen(str1) + width) / 2, str1);
-    printf("%*s\n", (strlen(str2) + width) / 2, str2);
-    printf("%*s\n", (strlen(str3) + width) / 2, str3);
-    printf("%*s\n", (strlen(str4) + width) / 2, str4);
-    printf("%*s\n", (strlen(str5) + width) / 2, str5);
-    printf("%*s\n", (strlen(str6) + width) / 2, str6);
+    printf("|     ____  _              ____  _           _    \n"
+                "|    |  _ \\| |            / ___ | |__   __ _| | __\n"
+                "|    | |_) | |_   _  ___  \\___ \\| '_ \\ / _` | |/ /\n"
+                "|    |  _ <| | | | |/ _ \\  ___) | | | | (_| |   < \n"
+                "|    | |_) | | |_| |  __/ |____/|_| |_|\\__,_|_|\\_\\\n"
+                "|    |____/|_|\\__,_|\\___|                          \n");
 }
 
 int menu () {
@@ -24,16 +16,16 @@ int menu () {
 
     logo();
 
-    printf("|_____________________________________________________________________ \n");
-    printf("|                                                                     |\n");
-    printf("|       [1] - Cadastrar novo cliente                                  |\n");
-    printf("|       [2] - Alterar plano (realizar pedido)                         |\n");
-    printf("|       [3] - Desativar cliente                                       |\n");
-    printf("|       [4] - Reativar cliente                                        |\n");
-    printf("|       [5] - Excluir cliente                                         |\n");
-    printf("|       [6] - Listar clientes                                         |\n");
-    printf("|       [7] - Sair                                                    |\n");
-    printf("|_____________________________________________________________________|\n");
+    printf("|_____________________________________________________________________ \n"
+            "|                                                                     |\n"
+            "|       [1] - Cadastrar novo cliente                                  |\n"
+            "|       [2] - Alterar plano (realizar pedido)                         |\n"
+            "|       [3] - Desativar cliente                                       |\n"
+            "|       [4] - Reativar cliente                                        |\n"
+            "|       [5] - Excluir cliente                                         |\n"
+            "|       [6] - Listar clientes                                         |\n"
+            "|       [7] - Sair                                                    |\n"
+            "|_____________________________________________________________________|\n");
 
     scanf("%d", &opcao);
 
