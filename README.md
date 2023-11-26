@@ -8,5 +8,5 @@ cmake -G "MinGW Makefiles" . .
 
 ## Criando o executável
 ```
-cmake --build
+cmake --build .
 ```
