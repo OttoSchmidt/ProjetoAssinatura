@@ -37,8 +37,8 @@ int menu () {
 int cadastroClientePagamento (DadosPagamentos *pagamento) {
     system("cls");
 
-    printf(" _____________________________________________________________________ \n");
-    printf("|       DADOS DE PAGAMENTO                                            |\n\n");
+    printf(" _____________________________________________________________________ \n"
+           "|       DADOS DE PAGAMENTO                                            |\n\n");
 
     printf("       Informe o nome no cartao: ");
     scanf(" %30[^\n]", pagamento->nome);
@@ -91,8 +91,8 @@ int cadastroNovoCliente (Cadastro *clientes, int i, int novoNumeroCliente) {
 
     system("cls");
 
-    printf(" _____________________________________________________________________ \n");
-    printf("|       CADASTRO CLIENTE                                              |\n\n");
+    printf(" _____________________________________________________________________ \n"
+                "|       CADASTRO CLIENTE                                              |\n\n");
 
     printf("       Informe o nome: ");
     scanf(" %30[^\n]", (clientes + i)->nome);
